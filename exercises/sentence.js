@@ -22,10 +22,13 @@ function getThirdWord(callback) {
 // use the above functions to complete the sentence and pass it to this function's callback
 function getSentence(callback) {
   // CODE HERE
-  getFirstWord(function(err, callback) {
-    getSecondWord(function(err, callback) {
-      getThirdWord(function(err, callback) {
-        console.log('callback', callback);
+  getFirstWord(function(word1) {
+  
+
+    getSecondWord(function(word2) {
+
+      getThirdWord(function(word3) {
+        callback('' + word1 + word2 + word3);
       })
     })
   })

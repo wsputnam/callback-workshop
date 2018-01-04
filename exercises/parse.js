@@ -41,7 +41,7 @@ function PLACEHOLDER() {};
 // call the callback to initiateParse so that it only runs after parsing is complete
 function initiateParse(callback) {
   // begins the parsing process by reading input
-  fs.readFile(__dirname + '/../input.txt', 'utf8', PLACEHOLDER);
+  fs.readFile(__dirname + '/../input.txt', 'utf8', callback);
   
   // writes output to output file
   function writeOutput(err, data) {
@@ -81,7 +81,7 @@ function initiateParse(callback) {
   function splitLines(err, data) {
     if (err) throw err;
     let input = data.toString().split('\n');
-    calculateLines(input, PLACEHOLDER);
+    calculateLines(input, callback);
   };
 
 }

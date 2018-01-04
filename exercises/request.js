@@ -27,7 +27,6 @@ function getStudents(callback) {
             
             // CODE HERE
             fs.readFile(pathToHouseFile, 'utf8', function(err, data) {
-                console.log('here is data', parsedData);
                 var arr = [];
                 parsedData.forEach(function(person) {
                     if (person.house === data) {
