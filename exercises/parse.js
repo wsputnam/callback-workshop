@@ -41,7 +41,9 @@ function PLACEHOLDER() {};
 // call the callback to initiateParse so that it only runs after parsing is complete
 function initiateParse(callback) {
   // begins the parsing process by reading input
-  fs.readFile(__dirname + '/../input.txt', 'utf8', callback);
+  fs.readFile(__dirname + '/../input.txt', 'utf8', function(error, data) {
+    splitLines(error, data);
+  });
   
   // writes output to output file
   function writeOutput(err, data) {
@@ -55,11 +57,14 @@ function initiateParse(callback) {
 
     fs.writeFile(__dirname + '/../output.txt', output, function(err) {
       if (err) throw err;
+      console.log('output', typeof output);
+      callback();
     });
   };
   
   // async function that sums lines and determines if they add up to more than 100
   function calculateLines(data, cb) {
+    console.log('data', data);
     let filteredData = data.map(function(el) {
       let values = el.split(' ');
       let isGreaterThanHundred = false;
@@ -72,6 +77,7 @@ function initiateParse(callback) {
       }
       return isGreaterThanHundred;
     });
+    console.log('filtere', filteredData);
     setTimeout(function() {
       cb(null, filteredData);
     }, 100);
@@ -81,7 +87,14 @@ function initiateParse(callback) {
   function splitLines(err, data) {
     if (err) throw err;
     let input = data.toString().split('\n');
-    calculateLines(input, callback);
+    calculateLines(input, function(error, data) {
+      if (error) {
+        callback(error);
+      } else {
+        writeOutput(null, data);
+        callback(data);
+      }
+    });
   };
 
 }
